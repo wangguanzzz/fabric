@@ -1,0 +1,26 @@
+---
+  - hosts: host1
+    become: true
+
+    tasks:
+
+      - name: install docker
+        yum:
+          name: docker
+          state: present
+      
+      - name: start docker service
+        service:
+          name: docker
+          state: started
+
+
+      - name: download docker-compose
+        get_url:
+          url: https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64
+          dest: /usr/bin/docker-compose
+          mode: 0555
+#        command: curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+
+#      - name: set permission
+#        command: chmod +x /usr/local/bin/docker-compose
